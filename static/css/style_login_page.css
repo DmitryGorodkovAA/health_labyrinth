@@ -2,7 +2,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     background: linear-gradient(0deg, rgba(232, 242, 240, 1) 0%, rgba(72, 135, 124, 1) 100%);
     background-repeat: no-repeat;
-    min-height: 100vh; margin: 0; 
+    min-height: 100vh; margin: 0;
 }
 
 
@@ -42,7 +42,7 @@ p{
 }
 
 .hero-section {
-    padding: 100px 0;
+    padding: 40px 0;
 }
 
 .cta-button {
@@ -62,6 +62,7 @@ p{
 .footer-text {
     color: #436475;
     font-size: 1.2rem;
+    padding-top: 1%;
 }
 
 .discription-div {
@@ -151,4 +152,91 @@ a {
 }
 .cta-button:active{
     background-color: #4A897E;
+}
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(0deg, rgba(232, 242, 240, 1) 0%, rgba(72, 135, 124, 1) 100%);
+}
+.link {
+    color: #ffff;
+}
+
+.link:hover {
+    color: #015849;
+}
+
+.link:active {
+    color: #436475;
+
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+a{
+    text-decoration: none;
+    padding: 10px;
+}
+.nav-custom {
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 20px;
+}
+.main-title {
+    font-size: 3rem;
+    color: #015849;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+.hero-section {
+    padding: 40px 0;
+}
+.cta-button {
+    background: #4A897E;
+    border-radius: 60px;
+    padding: 25px 50px;
+    font-size: 2rem;
+    color: white;
+    font-weight: bold;
+}
+.cta-button:hover{
+    background-color: #36645d;
+    color: white;
+}
+.step-number {
+    font-size: 4rem;
+    color: #377C70;
+    font-weight: 700;
+}
+.footer-text {
+    color: #436475;
+    font-size: 1.2rem;
+    padding-top: 1%;
+}
+.discription-div{
+    padding: 5%;
+    border-radius: 100px;
+}
+.discription-img{
+    float:right;
+}
+.footer-img{
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    background-color: #4A897E;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    max-width: 170%;
+}
+.steps-div{
+    width: 70%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+footer{
+    min-height:100%;
+    bottom: 10px;
+    width: 100%
 }
