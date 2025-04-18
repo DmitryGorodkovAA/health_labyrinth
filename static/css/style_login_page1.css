@@ -1,0 +1,155 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(0deg, rgba(232, 242, 240, 1) 0%, rgba(72, 135, 124, 1) 100%);
+    background-repeat: no-repeat;
+    min-height: 100vh; margin: 0;
+}
+
+
+.link {
+    color: #ffff;
+}
+
+.link:hover {
+    color: #015849;
+}
+
+.link:active {
+    color: #436475;
+
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.nav-custom {
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 20px;
+}
+p{
+    color: #005849;
+    font-weight:300;
+}
+.main-title {
+    font-size: 3rem;
+    color: #015849;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.hero-section {
+    padding: 100px 0;
+}
+
+.cta-button {
+    background: #4A897E;
+    border-radius: 60px;
+    padding: 25px 50px;
+    font-size: 1.5rem;
+    color: white !important;
+}
+
+.step-number {
+    font-size: 4rem;
+    color: #377C70;
+    font-weight: 700;
+}
+
+.footer-text {
+    color: #436475;
+    font-size: 1.2rem;
+}
+
+.discription-div {
+    padding: 5%;
+    border-radius: 100px;
+}
+
+.discription-img {
+    float: right;
+}
+.footer-img{
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    background-color: #4A897E;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    max-width: 200px
+}
+
+footer{
+    bottom: 1%;
+    width: 100%
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    padding-left: 0%;
+    padding-right: 2%;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    max-width: 200px
+}
+
+h1, h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"]{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+input[type="checkbox"] {
+    margin-top: 10px;
+}
+
+p {
+    text-align: center;
+    margin-top: 15px;
+}
+
+a {
+    color: #007B5F;
+    text-decoration: none;
+}
+
+
+.cta-button {
+    background: #4A897E;
+    border-radius: 60px;
+    padding: 25px 50px;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    color: #015849;
+    width: 100%;
+    margin-top: 15px;
+    border: transparent;
+}
+.cta-button:hover{
+    background-color: #36645d;
+    color: white;
+}
+.cta-button:active{
+    background-color: #4A897E;
+}
