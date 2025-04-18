@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect
 
 from .forms import RegisterForm, LoginForm
@@ -18,9 +18,28 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 def login_page(request):
-    login_form = LoginForm()
+    if request.user.is_authenticated:
+        return redirect('personal_account')
+
+    if request.method == 'POST':
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            email = login_form.cleaned_data['email']
+            password = login_form.cleaned_data['password']
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('personal_account')
+            else:
+                login_form.add_error(None, 'Неверный email или пароль.')
+    else:
+        login_form = LoginForm()
 
     return render(request, 'user_login.html', context={'title': 'Login', 'login_form': login_form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 def personal_account(request):
 

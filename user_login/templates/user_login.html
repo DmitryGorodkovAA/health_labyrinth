@@ -3,19 +3,6 @@
 {% load static %}
 
 <link rel="stylesheet" href="{% static 'css/style_login_page.css' %}">
-
-
-    <header class="container py-4">
-        <div class="d-flex justify-content-between align-items-center nav-custom">
-            <img src="{% static 'picture/logo.png' %}" alt="Logo" style="height: 100px; margin-left: 80px;">
-            <div class="d-flex gap-4">
-                <a href="#" class="link">Главная</a>
-                <a href="#" class="link">Цифровой профиль</a>
-                <a href="#" class="link">Индивидуальный план</a>
-                <a href="{% url 'register' %}" class="link">Войти</a>
-            </div>
-        </div>
-    </header>
         {% if login_form.non_field_errors %}
           <div class="alert alert-danger">
             {{ login_form.non_field_errors }}
@@ -37,15 +24,6 @@
                         <div class="vr"></div>
                         <div class="p-2"><h2>РЕГИСТРАЦИЯ</h2></div>
                     </div>
-<!--                    <form>-->
-<!--                        <label for="email">E-mail</label>-->
-<!--                        <input type="email" id="email" placeholder="ivanivanov@mail.ru" required>-->
-<!--                        <label for="password">Пароль</label>-->
-<!--                        <input type="password" id="password" required>-->
-<!--                        <input type="checkbox" id="remember">-->
-<!--                        <label for="remember">Запомнить меня</label>-->
-<!--                        <button class="cta-button">ВОЙТИ</button>-->
-<!--                    </form>-->
                     <form method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                         <label for="{{ login_form.email.id_for_label }}">E-mail</label>
