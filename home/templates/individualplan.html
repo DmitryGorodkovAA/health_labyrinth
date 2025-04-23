@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+
+<html lang="ru">
+<head>
+    <title>Лабиринт Здоровья</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/individualplan.css' %}">
+
+
+</head>
+<body>
+
+<section class="hero-section container">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-6 bg-light discription-div gap-3">
+            <h1 class="main-title">Ваше желаемое состояние организма</h1>
+            <div class="container mt-4 list-categories">
+                <div class="mb-2">
+                    <input type="text" class="form-control-plaintext" id="category1" value="213" readonly>
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control-plaintext" id="category2" value="123" readonly>
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control-plaintext" id="category3" value="123" readonly>
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control-plaintext" id="category4" value="123" readonly>
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control-plaintext" id="category5" value="123" readonly>
+                </div>
+            </div>
+            <button href="#" class="btn cta-button">Изменить желаемый результат</button>
+        </div>
+
+        <!-- Правая колонка с дополнительным отступом -->
+        <div class="col-lg-6 bg-light discription-div">
+            <div class="row g-0 h-100">
+                <!-- Добавим правый отступ к изображению -->
+                <div class="col-lg-6 bg-light d-flex align-items-center p-3"> <!-- pe-4 = padding-right: 1.5rem -->
+                    <img src="image11traced1948-r3sa.svg" alt="Аватар" class="img-fluid">
+                </div>
+                <!-- Добавим левый отступ к текстовой части -->
+                <div class="col-lg-6 bg-light p-3 ps-4"> <!-- ps-4 = padding-left: 1.5rem -->
+                    <div class="d-flex flex-column gap-3 h-100">
+                        <div class="profilediv"><p>{{lastname}}</p></div>
+                        <div class="profilediv"><p>{{firstname}}</p></div>
+                        <div class="profilediv"><p>{{gender}}</p></div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column gap-3">
+                    <button href="#" class="btn cta-button w-100">Редактировать профиль</button>
+                    <button href="#" class="btn cta-button w-100">Изменить профиль</button>
+                    <button href="#" class="btn cta-button w-100">Выйти из профиля</button>
+                    <button href="#" class="btn del-button w-100">Удалить профиль</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero-section">
+    <!-- Убрали container, чтобы секция занимала всю ширину -->
+    <div class="container-fluid py-5 advise-div"> <!-- container-fluid вместо container -->
+        <div class="row justify-content-around g-4"> <!-- Выравнивание с пространством вокруг -->
+            <!-- Совет 1 -->
+            <div class="col-lg-3 col-md-8 "> <!-- Адаптивная ширина колонок -->
+                <div class="h-100 p-3 step-div"> <!-- Добавили фон и тень -->
+                    <h1>Совет 1:</h1>
+                    <p>Для приведения вашего веса к желаемому результату следуйте данным указаниям:</p>
+                    <p>1. совет по питанию</p>
+                    <p>2. совет по упражнениям</p>
+                    <img src="image11traced1948-r3sa.svg" alt="Картинка" class="img-fluid mt-3 d-block mx-auto">
+                </div>
+            </div>
+
+            <!-- Совет 2 -->
+            <div class="col-lg-3 col-md-8">
+                <div class="h-100 p-3 step-div">
+                    <h1>Совет 2:</h1>
+                    <p>Для приведения вашего веса к желаемому результату следуйте данным указаниям:</p>
+                    <p>1. совет по питанию</p>
+                    <p>2. совет по упражнениям</p>
+                    <img src="image11traced1948-r3sa.svg" alt="Картинка" class="img-fluid mt-3 d-block mx-auto">
+                </div>
+            </div>
+
+            <!-- Совет 3 -->
+            <div class="col-lg-3 col-md-8">
+                <div class="h-100 p-3 step-div">
+                    <h1>Совет 3:</h1>
+                    <p>Для приведения вашего веса к желаемому результату следуйте данным указаниям:</p>
+                    <p>1. совет по питанию</p>
+                    <p>2. совет по упражнениям</p>
+                    <img src="image11traced1948-r3sa.svg" alt="Картинка" class="img-fluid mt-3 d-block mx-auto">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% endblock %}

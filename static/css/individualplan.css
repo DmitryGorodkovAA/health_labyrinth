@@ -1,0 +1,148 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(0deg, rgba(232, 242, 240, 1) 0%, rgba(72, 135, 124, 1) 100%);
+}
+.link {
+    color: #ffff;
+}
+
+.link:hover {
+    color: #015849;
+}
+
+.link:active {
+    color: #436475;
+
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+a{
+    text-decoration: none;
+    padding: 10px;
+}
+.nav-custom {
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 20px;
+}
+.main-title {
+    font-size: 3rem;
+    color: #015849;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+.hero-section {
+    padding: 40px 0;
+}
+.cta-button {
+    background: #4A897E;
+    border-radius: 60px;
+    padding: 15px 40px;
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+}
+.cta-button:hover{
+    background-color: #36645d;
+    color: white;
+}
+.del-button {
+    background: #7e8686;
+    border-radius: 60px;
+    padding: 15px 40px;
+    font-size: 1rem;
+    color: white;
+    font-weight: bold;
+}
+.del-button:hover{
+    background-color: #36645d;
+    color: white;
+}
+.step-number {
+    font-size: 4rem;
+    color: #377C70;
+    font-weight: 700;
+}
+.footer-text {
+    color: #436475;
+    font-size: 1.2rem;
+    padding-top: 1%;
+}
+.discription-div{
+    padding: 5%;
+    margin: 10px;
+    border-radius: 50px;
+    max-width: 630px;
+    height: 500px;
+
+}
+.discription-img{
+    float:right;
+}
+.footer-img{
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    background-color: #4A897E;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    max-width: 170%;
+}
+.steps-div{
+    width: 70%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+footer{
+    min-height:100%;
+    bottom: 10px;
+    width: 100%
+}
+.list-categories{
+    border: 2px solid;
+    border-radius: 20px;
+    border-color: #36645d;
+    margin-bottom: 20px;
+}
+
+.profilediv {
+    display: flex;          /* Включаем flex-распределение */
+    justify-content: center; /* Горизонтальное центрирование */
+    align-items: center;   /* Вертикальное центрирование */
+    padding: 2px;         /* Минимальная высота для демонстрации */
+    border: 1px solid #ccc;      /* Отступы снаружи div (при необходимости) */
+    border-radius: 5px;
+    background-color: rgba(72, 135, 124, 1);
+    color: white;
+
+}
+
+.profilediv p {
+    margin: 0;             /* Убираем стандартные отступы у параграфа */
+    padding: 1px;         /* Отступы внутри текстового блока (опционально) */
+}
+.advise-div {
+    padding: 5%;
+    margin: 10px;
+    border-radius: 50px;
+    max-width: 1200px; /* Максимальная ширина контента */
+    margin: 0 auto; /* Центрирование */
+    float: none;
+    background-color: rgb(255, 255, 255);
+}
+
+
+.advise-div img {
+    max-width: 250px; /* Ограничение размера изображений */
+    margin: 0 auto; /* Центрирование изображения */
+    display: block;
+}
+.step-div{
+    padding-left: 10%;
+    padding-right: 10%;
+    background-color: rgba(81, 155, 143, 0.08);
+    border-radius: 25px;
+}
