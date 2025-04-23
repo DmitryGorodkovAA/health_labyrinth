@@ -26,6 +26,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
+    age = models.IntegerField(default=20)
+    weight = models.FloatField(default=65)
+    height = models.IntegerField(default=180)
+    gender = models.CharField(max_length=1, choices=[('M', 'Male'), ('F', 'Female')], default='M')
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'

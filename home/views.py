@@ -7,9 +7,20 @@ from user_login.models import User
 
 
 def home(request):
-    return render(request, 'home.html', context={'title': 'Домашняя страница'})
-def individualplan(request):
 
-    return render(request, 'individualplan.html', context={'title': 'Индивидуальный план', 'firstname': "Неважно", 'lastname': "Последнее", 'gender':'Механик'})
+    return render(request, 'home.html', context={'title': 'Домашняя страница'})
+
+
+def individualplan(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+    user = User.objects.get(id=request.user.id)
+
+    return render(request, 'individualplan.html', context={
+        'title': 'Индивидуальный план',
+        'firstname': user.first_name,
+        'lastname': user.last_name,
+        'gender': user.gender,})
 
 
