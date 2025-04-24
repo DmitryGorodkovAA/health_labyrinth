@@ -1,6 +1,8 @@
+import json
 import random
 
 from django.shortcuts import render, redirect
+import random
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -33,22 +35,40 @@ def digital_profile(request):
         return redirect('/login')
     return render(request, 'digital_profile.html')
 
+
+
+
+
 def forecast(request):
     if not request.user.is_authenticated:
         return redirect('/login')
 
     user = User.objects.get(id=request.user.id)
+
     forecasts = user.forecast.all()
 
-    print(list(forecasts))
+    forecasts_data = []
 
-    forecasts_final = []
+    for forecast_obj in forecasts:
+        points_data = [
+            {
+                "age": point.age,
+                "percent": point.percent
+            }
+            for point in forecast_obj.points.all()
+        ]
 
-    for forecast in forecasts:
-        forecasts_final.append({'name': forecast.name, 'points': forecast.points.all()})
+        forecasts_data.append({
+            "id": forecast_obj.id,
+            "name": forecast_obj.name,
+            "points": json.dumps(points_data)
+        })
 
-
-    return render(request, 'digital_profile.html', context={'title' : 'Предсказания', 'user': user, 'forecasts': forecasts_final})
+    return render(request, 'digital_profile.html', {
+        'title': 'Прогнозы',
+        'user': user,
+        'forecasts': forecasts_data
+    })
 
 def gen_individual_plan(request, user_id):
     user = get_object_or_404(User, id=user_id)
@@ -70,4 +90,6 @@ def gen_individual_plan(request, user_id):
     return HttpResponse('Hello, World!')
 
 
+    print(list(f"{forecste.name}" for forecste in forecasts))
+    print(list(f"{forecste.points}" for forecste in forecasts))
 
