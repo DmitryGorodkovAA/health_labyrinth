@@ -48,9 +48,13 @@ def personal_account(request):
         last_name = request.user.last_name
         email = request.user.email
 
-        return render(request, 'personal_account.html', context={'title': 'Personal Account', 'first_name': first_name, 'last_name': last_name, 'email': email})
+        return render(request, 'personal_account.html', context={
+            'title': 'Personal Account',
+            'first_name': first_name, 'last_name': last_name, 'email': email})
     else:
         return redirect('login')
+
+
 
 
 
