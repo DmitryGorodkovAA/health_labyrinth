@@ -1,0 +1,325 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(0deg, rgba(232, 242, 240, 1) 0%, rgba(72, 135, 124, 1) 100%);
+    background-repeat: no-repeat;
+}
+.link {
+    color: #ffff;
+}
+
+.link:hover {
+    color: #015849;
+}
+
+.link:active {
+    color: #436475;
+
+}
+
+.message-box {
+    background-color: #ffffff; /* Белый цвет заднего фона */
+    padding: 20px; /* Поля вокруг текста */
+    border-radius: 25px; /* Закругленные углы */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Тень */
+    text-align: left; /* Центрирование текста */
+    max-width: 1200px; /* Максимальная ширина */
+    margin-left: 100px;
+    margin-top: 25px;
+ }
+
+.message-box p {
+    margin: 0; /* Обнуление отступов */
+    line-height: 1.5; /* Высота строки */
+    font-size: 22px; /* Размер шрифта */
+    font-weight: bold;
+    color: #004A3D; 
+}
+
+.fill_info{
+    padding: 20px; /* Поля вокруг текста */
+    border-radius: 25px;
+    margin-left: 100px;
+    margin-top: 20px;
+    max-width: 1200px; /* Максимальная ширина */
+    max-height: 50%;
+    background: radial-gradient(91.56% 91.56% at 49.13% 42.34%, rgb(255, 255, 255) 0%, rgb(200, 235, 226) 100%);
+    
+}
+
+.chart-section {
+    margin-top: 30px;
+    display: flex;
+    width: 750px; 
+    height: 380px;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 15px 40px 10px 15px; /* Поля вокруг текста */
+    border-radius: 25px; /* Закругленные углы */
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Тень */
+    margin-right: 30px;
+}
+
+.advice{
+    margin: 20px;
+    margin-left: 0px;
+
+}
+.advice label{
+    font-weight: bold;
+    color: #004A3D; 
+    margin-left: 0px;
+    margin-top: 5px;
+    padding: 10px 10px 10px 10px; /* Поля вокруг текста */
+    border-radius: 25px; /* Закругленные углы */
+    background-color: #ffffff;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+a{
+    text-decoration: none;
+    padding: 10px;
+}
+.nav-custom {
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 20px;
+}
+.main-title {
+    font-size: 3rem;
+    color: #015849;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    background: #4A897E;
+    border-radius: 60px;
+    padding: 15px 30px;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    margin-left: 30px;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Тень */
+    width: 300px;
+}
+.cta-button:hover{
+    background-color: #36645d;
+    color: white;
+}
+.step-number {
+    font-size: 4rem;
+    color: #377C70;
+    font-weight: 700;
+}
+.footer-text {
+    color: #436475;
+    font-size: 1.2rem;
+    padding-top: 1%;
+}
+
+.discription-img{
+    float:right;
+}
+.footer-img{
+    padding: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    background-color: #4A897E;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    max-width: 170%;
+}
+.steps-div{
+    width: 70%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+footer{
+    min-height:100%;
+    bottom: 10px;
+    width: 100%
+}
+
+.form-container {
+    margin-top: 30px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Тень */
+    width: 300px;
+    margin-left: 30px;
+    height: 380px;
+    display: block;
+}
+
+.form-field {
+    display: flex;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-field label {
+    display: block;
+    align-items: center;
+    margin-bottom: 5px; /* Расстояние между строками */
+    font-weight: bold;
+    color: #004A3D; 
+    font-size: 17px;
+}
+
+.form-field::after {
+    content: "";
+    display: flex;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin-top: 5px;
+}
+
+label {
+    display: flex;
+    margin-right: 10px; /* Расстояние между меткой и полем ввода */
+}
+
+input[type="number"] {
+    width: 100px; /* Ширина поля для ввода возраста */
+    margin-left: 30px;
+    border-color: #ffffff;
+    border: none;
+}
+
+input p[type="checkbox"] {
+    display: flex;
+}
+
+#checkboxContainer {
+    display: none; /* Скрываем контейнер с чекбоксами по умолчанию */
+    border:white;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Тень */
+}
+
+#checkboxContainer p {
+    display: block; 
+    margin: 0px;
+}
+
+button {
+    cursor: pointer;
+    border:none;
+    background-color: #ffffff;
+    margin-left: 3px;
+}
+
+.wish{
+    margin-top: 30px;
+    margin-left: 100px;
+    border-radius: 25px;
+    padding: 5px;
+    background-color: #ffffff;
+    margin-bottom: 0px;
+}
+
+.wish p{
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-bottom: 5px;
+    font-size: 22px; /* Размер шрифта */
+    font-weight: bold;
+    color: #004A3D;
+}
+
+.wish i{
+    color: #004A3D;
+    font-size: 18px;
+    margin-left: 30px;
+}
+
+.category{
+    margin-top: 40px;
+    margin-left: 50px;
+}
+
+/*бегунок*/
+
+.description {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #004A3D;
+    font-size: 14px;
+}
+
+.category {
+    margin-bottom: 25px;
+}
+
+.category-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.option {
+    text-align: center;
+    flex: 1;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.option.selected {
+    background-color: #f0f8ff;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.slider-container {
+    margin: 30px 0;
+}
+
+.slider {
+    width: 100%;
+    height: 6px;
+    background: #004A3D;
+    border-radius: 3px;
+    margin-top: 15px;
+}
+
+.slider .thumb {
+    width: 20px;
+    height: 20px;
+    background: #004A3D;
+    border-radius: 50%;
+    position: relative;
+    top: -7px;
+    left: 0;
+    cursor: pointer;
+}
+
+.get-plan-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #004A3D;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.get-plan-btn:hover {
+    background-color: #004A3D;
+}

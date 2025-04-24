@@ -22,5 +22,8 @@ def individualplan(request):
         'firstname': user.first_name,
         'lastname': user.last_name,
         'gender': user.gender,})
-
+def digitalprofile(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    return render(request, 'digital_profile.html')
 
