@@ -43,9 +43,15 @@ class Forecast(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='forecast')
     name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.name
+
 
 class PointForecast(models.Model):
     forecast = models.ForeignKey(Forecast, on_delete=models.CASCADE, related_name='points')
     age = models.IntegerField()
     percent = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.forecast.name}: age: {self.age}, percent: {self.percent}'

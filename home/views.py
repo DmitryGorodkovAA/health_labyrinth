@@ -1,3 +1,5 @@
+import random
+
 from django.shortcuts import render, redirect
 
 from django.http import HttpResponse
@@ -25,6 +27,7 @@ def individual_plan(request):
         'firstname': user.first_name,
         'lastname': user.last_name,
         'gender': user.gender,})
+
 def digital_profile(request):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -37,9 +40,15 @@ def forecast(request):
     user = User.objects.get(id=request.user.id)
     forecasts = user.forecast.all()
 
+    print(list(forecasts))
+
+    forecasts_final = []
+
+    for forecast in forecasts:
+        forecasts_final.append({'name': forecast.name, 'points': forecast.points.all()})
 
 
-    return render(request, 'digital_profile.html', context={'title' : 'Предсказания', 'user': user, 'forecasts': forecasts})
+    return render(request, 'digital_profile.html', context={'title' : 'Предсказания', 'user': user, 'forecasts': forecasts_final})
 
 def gen_individual_plan(request, user_id):
     user = get_object_or_404(User, id=user_id)
