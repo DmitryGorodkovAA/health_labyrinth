@@ -1,0 +1,39 @@
+
+     <div class="chart-section">
+         <canvas id="heartDiseaseChart"></canvas>
+     </div>
+<script>
+                // Выбор опции
+                const options = document.querySelectorAll('.option');
+                options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        options.forEach(opt => opt.classList.remove('selected'));
+                        option.classList.add('selected');
+                    });
+                });
+
+                // Перемещение ползунка
+                const slider = document.querySelector('.slider');
+                const thumb = document.querySelector('.thumb');
+                let isDragging = false;
+
+                thumb.addEventListener('mousedown', () => {
+                    isDragging = true;
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    if (!isDragging) return;
+
+                    const sliderRect = slider.getBoundingClientRect();
+                    let newLeft = e.clientX - sliderRect.left;
+
+                    // Ограничиваем движение ползунка в пределах слайдера
+                    newLeft = Math.max(0, Math.min(newLeft, sliderRect.width));
+
+                    thumb.style.left = newLeft + 'px';
+                });
+
+                document.addEventListener('mouseup', () => {
+                    isDragging = false;
+                });
+</script>

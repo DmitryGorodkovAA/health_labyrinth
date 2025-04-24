@@ -1,4 +1,4 @@
-import random
+from django.shortcuts import render, redirect
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -25,6 +25,10 @@ def individual_plan(request):
         'firstname': user.first_name,
         'lastname': user.last_name,
         'gender': user.gender,})
+def digital_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    return render(request, 'digital_profile.html')
 
 def forecast(request):
     if not request.user.is_authenticated:
