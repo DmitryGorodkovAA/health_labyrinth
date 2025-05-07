@@ -28,7 +28,7 @@
                     <div class="form-container">
                         <div class="form-field">
                             <label style="display: flex;">Возраст</label>
-                            <input type="number" min="5" max="60" placeholder="Введите" />
+                            <input type="number" id = "age" min="5" max="60" placeholder="Введите" />
                         </div>
 
                         <div class="form-field">
@@ -89,6 +89,33 @@
                         </div>
                     </div>
                     <button class="cta-button btn" onclick="updateCharts()">Обновить график</button>
+                    <script>
+                        function updateCharts() {
+                            const formData = {
+                                age: document.getElementById('age').value,
+                                height: document.getElementById('height').value,
+                                weight: document.getElementById('weight').value,
+                                gender: document.getElementById('gender').value,
+                                lifestyle: document.getElementById('lifestyle').value,
+                                habits: []
+                            };
+
+                            const habitCheckboxes = document.querySelectorAll('#checkboxContainer input[type="checkbox"]');
+                            const habitLabels = document.querySelectorAll('#checkboxContainer p');
+
+                            habitCheckboxes.forEach((checkbox, index) => {
+                                if (checkbox.checked) {
+                                    const habitText = habitLabels[index].textContent.replace(/\n/g, '').trim();
+                                    formData.habits.push(habitText);
+                                }
+                            });
+
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('POST', 'урлсервера', true);
+                            xhr.setRequestHeader('Content-Type', 'application/json');
+                            xhr.send(JSON.stringify(formData));
+                        }
+                    </script>
                 </div>
                 <div class="col">
                     <div class="chart-sections" >
