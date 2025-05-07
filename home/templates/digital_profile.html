@@ -91,23 +91,14 @@
                     <button class="cta-button btn" onclick="updateCharts()">Обновить график</button>
                 </div>
                 <div class="col">
-
-                    <div class="chart-section">
-                         {% for forecast in forecasts %}  <!-- Правильный тег: for вместо foreach -->
-                            <h1>{{ forecast.name }}</h1>
+                    <div class="chart-sections" >
+                        {% for forecast in forecasts %}
+                         <div class="single-chart-container" style="max-height: 300px">
+                             <h3>{{ forecast.name }}</h3>
+                            <canvas id="chart-{{ forecast.id }}"></canvas>
+                        </div>
+                        {% include "Chart.html" with forecast=forecast %}
                         {% endfor %}
-
-     {% for forecast in forecasts %}
-        {% include "Chart.html" %}
-    {% endfor %}
-                        <script>
-
-                        </script>
-                    </div>
-
-                    <div class="advice">
-                        <label class="advice_">Совет 1:</label>
-                        <label class="advice_">Совет 2:</label>
                     </div>
                 </div>
             </div>

@@ -1,129 +1,38 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    (function () {
-        const chartId = 'dynamicHeartChart_{{ forecast.id }}';
+document.addEventListener('DOMContentLoaded', function() {
+    const chartId = 'chart-{{ forecast.id }}';
+    const ctx = document.getElementById(chartId).getContext('2d');
 
-        const chartContainer = document.createElement('div');
-        chartContainer.className = 'chart-section';
-        chartContainer.id = 'chart-container-' + chartId;
-        document.body.appendChild(chartContainer);
+    // Данные из Django
+    const points = {{ forecast.points|safe }};
+    const labels = points.map(point => point.age);
+    const data = points.map(point => point.percent);
 
-        // Создаем canvas для этого графика
-        const canvas = document.createElement('canvas');
-        canvas.id = chartId;
-        chartContainer.appendChild(canvas);
-        const labels = [];
-        const data = [];
-        // Инициализация графика
-        const points = {{ forecast.points|safe }};
-
-
-
-        points.forEach((point) => {
-            labels.push(point.age);
-            data.push(point.percent);
-        });
-
-
-        console.log(labels)
-        const ctx = document.getElementById(chartId).getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Вероятность сердечно-сосудистых заболеваний',
-                    data: data,
-                    borderColor: '#004A3D',
-                    fill: false,
-                    font: {
-                        size: 20,
-                        family: 'Arial',
-                        weight: 'bold'
-                    },
-                    color: '#015849'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: '%',
-                            font: {
-                                size: 13,
-                                weight: 'bold'
-                            },
-                            color: '#004A3D'
-                        },
-                        ticks: {
-                            color: '#004A3D'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Возраст',
-                            font: {
-                                size: 13,
-                                weight: 'bold'
-                            },
-                            color: '#004A3D'
-                        },
-                        ticks: {
-                            color: '#004A3D'
-                        }
-                    }
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Вероятность (%)',
+                data: data,
+                borderColor: '#004A3D',
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: '%' }
                 },
-                plugins: {
-                    legend: {
-                        labels: {
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            },
-                            color: '#004A3D'
-                        }
-                    }
+                x: {
+                    title: { display: true, text: 'Возраст' }
                 }
             }
-        });
-
-        // Общие элементы управления (если они нужны для всех графиков)
-        if (!window.chartControlsInitialized) {
-            // Выбор опции
-            const options = document.querySelectorAll('.option');
-            options.forEach(option => {
-                option.addEventListener('click', () => {
-                    options.forEach(opt => opt.classList.remove('selected'));
-                    option.classList.add('selected');
-                });
-            });
-
-            // Перемещение ползунка
-            const slider = document.querySelector('.slider');
-            const thumb = document.querySelector('.thumb');
-            let isDragging = false;
-
-
-
-            document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-
-                const sliderRect = slider.getBoundingClientRect();
-                let newLeft = e.clientX - sliderRect.left;
-                newLeft = Math.max(0, Math.min(newLeft, sliderRect.width));
-                thumb.style.left = newLeft + 'px';
-            });
-
-            document.addEventListener('mouseup', () => {
-                isDragging = false;
-            });
-
-            window.chartControlsInitialized = true;
         }
-    })();
+    });
+});
 </script>
