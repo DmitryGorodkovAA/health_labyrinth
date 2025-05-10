@@ -18,13 +18,19 @@
                             чтобы обеспечить сбережение вашего здоровья
                     </p>
                 </div>
-                <div class="col-lg-6">
-                    <div class="form-header">
-                        <div class="p-2 ms-auto"><h1>ВХОД</h1></div>
+
+                 <div class="col-lg-6">
+                    <div class="form-header d-flex align-items-center mb-4">
+                        <div class="p-2 ms-auto tab-link active" data-form="loginForm">
+                            <h1 class="m-0" style="cursor: pointer; color: #377C70">ВХОД</h1>
+                        </div>
                         <div class="vr"></div>
-                        <div class="p-2"><h2>РЕГИСТРАЦИЯ</h2></div>
+                        <div class="p-2 tab-link" data-form="registerForm">
+                            <h2 class="m-0" style="cursor: pointer; color: #000000">РЕГИСТРАЦИЯ</h2>
+                        </div>
                     </div>
-                    <form method="post" action="{% url 'login' %}">
+
+                    <form id="loginForm" method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                         <label for="{{ login_form.email.id_for_label }}">E-mail</label>
                         {{ login_form.email }}
@@ -39,6 +45,55 @@
 
                         <button class="cta-button" type="submit">ВОЙТИ</button>
                      </form>
+
+                    <!-- Форма регистрации и я не ебу как поженить её с беком -->
+                    <form id="registerForm" class="needs-validation d-none" novalidate>
+                        <div class="mb-3">
+                            <label for="Namereg" class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="Namereg" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Sernamereg" class="form-label">Фамилия</label>
+                            <input type="text" class="form-control" id="Sernamereg" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailreg" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="emailreg" placeholder="ivanivanov@mail.ru" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordreg" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" id="passwordreg" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmpassword" class="form-label">Подтвердите пароль</label>
+                            <input type="password" class="form-control" id="confirmpassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 cta-button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                    </form>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.tab-link');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.querySelector('h1, h2').style.color = '#000000';
+            });
+            this.classList.add('active');
+            this.querySelector('h1, h2').style.color = '#377C70';
+            document.querySelectorAll('form').forEach(form => {
+                form.classList.add('d-none');
+            });
+            const formId = this.dataset.form;
+            document.getElementById(formId).classList.remove('d-none');
+        });
+    });
+});
+</script>
+
                     <p><a href="#">Забыли пароль?</a></p>
                 </div>
             </div>

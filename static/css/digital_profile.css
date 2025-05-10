@@ -315,26 +315,30 @@ button {
 
 
 .chart-sections {
-            display: flex;
+    display: flex;
     flex-direction: column;
-    gap: 40px;
+    align-items: center;
     width: 100%;
-    padding: 20px;
-    border-radius: 25px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    margin-top: 30px;
-
+    gap: 30px;
+    padding: 20px 0;
 }
 
 .single-chart-container {
     width: 100%;
-    min-height: 300px;
-    position: relative; /* Важно для Chart.js */
+    max-width: 800px;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.single-chart-container h3 {
-    color: #004A3D;
-    margin-bottom: 15px;
-    font-weight: 600;
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 300px;
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
