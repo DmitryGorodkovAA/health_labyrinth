@@ -21,16 +21,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto link">
                     <li class="nav-item">
-                        <a href="#" class="link">Главная</a>
+                        <a href="{% url 'home' %}" class="link">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="link">Цифровой профиль</a>
+                        <a href="{% url 'lk' %}" class="link">Цифровой профиль</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="link">Индивидуальный план</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'register' %}" class="link">Войти</a>
+                        <a href="{% url 'forecasts' %}" class="link">Индивидуальный план</a>
                     </li>
                 </ul>
             </div>

@@ -1,17 +1,27 @@
 import json
+import profile
 import random
 
+from django.contrib.postgres import serializers
 from django.shortcuts import render, redirect
 import random
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_http_methods
 
 from user_login.models import User, Forecast, PointForecast
+from rest_framework import serializers
+
 
 
 # Create your views here.
 
+def lk(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
+    return render(request, 'lk.html', context={'user': request.user})
 
 def home(request):
 
@@ -64,6 +74,8 @@ def forecast(request):
             "points": json.dumps(points_data)
         })
 
+    print(forecasts_data)
+
     return render(request, 'digital_profile.html', {
         'title': 'Прогнозы',
         'user': user,
@@ -73,23 +85,57 @@ def forecast(request):
 def gen_individual_plan(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
-    types = ['Сколиоз', 'Рак крови', 'Лейкемия', 'Сердечная недостаточность', 'Болезнь Альцсгеймера']
+    prog = ["Болезнь Альцгеймера", "Болезнь Паркинсона", "Сосудистая деменция", "Ишемическая болезнь сердца", "Инсульт", "Сердечная недостаточность", "Рак лёгких", "Рак молочной железы", "Рак простаты", "Рак толстой кишки", "Лейкемия", "Остеопороз", "Ревматоидный артрит", "Сахарный диабет 2 типа", "Хроническая почечная недостаточность", "Хроническая обструктивная болезнь лёгких (ХОБЛ)"]
 
-    for typy in types:
-        forecast = Forecast(name=typy, user=user)
+    for point in prog:
+        forecast = Forecast(user=user, name=point)
         forecast.save()
+        percent = random.randint(5, 10)
+        print(point, percent)
 
-        last_percent = random.randint(2, 5)
-        for yar in range(user.age, user.age + 25):
-            point = PointForecast(age=yar, forecast=forecast,  percent=last_percent)
+        for age in range(user.age, user.age + 20):
+            print(user, age)
+            pointForecast = PointForecast(forecast=forecast, percent=percent, age=age)
+            pointForecast.save()
+            percent += random.randint(2, 5)
 
-            last_percent += random.randint(1, 3)
-
-            point.save()
-
-    return HttpResponse('Hello, World!')
+    return HttpResponse('asd')
 
 
-    print(list(f"{forecste.name}" for forecste in forecasts))
-    print(list(f"{forecste.points}" for forecste in forecasts))
+
+def user_profile_update(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+
+
+@require_http_methods(["POST"])  # Разрешаем только POST-запросы
+def user_profile_update(request):
+    try:
+        data = json.loads(request.body)
+
+        response_data = {
+            "status": "success",
+            "message": "Data processed successfully",
+            "received_data": data
+        }
+
+        return JsonResponse(response_data, status=200)
+
+    except json.JSONDecodeError:
+        return JsonResponse(
+            {"status": "error", "message": "Invalid JSON format"},
+            status=400
+        )
+
+    except Exception as e:
+        # Обработка других исключений
+        return JsonResponse(
+            {"status": "error", "message": str(e)},
+            status=500
+        )
+
 
