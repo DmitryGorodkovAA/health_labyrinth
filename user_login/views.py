@@ -29,7 +29,7 @@ def login_page(request):
             user = authenticate(request, username=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('personal_account')
+                return redirect('lk')
             else:
                 login_form.add_error(None, 'Неверный email или пароль.')
     else:
