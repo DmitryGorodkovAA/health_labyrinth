@@ -15,7 +15,7 @@ def register(request):
             return redirect('personal_account')
     else:
         form = RegisterForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'user_login.html', {'form': form})
 
 def login_page(request):
     if request.user.is_authenticated:
