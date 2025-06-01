@@ -1,126 +1,101 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+{% block content %}
 
 <link rel="stylesheet" href="{% static 'css/style_login_page.css' %}">
-        {% if login_form.non_field_errors %}
-          <div class="alert alert-danger">
-            {{ login_form.non_field_errors }}
+
+<section class="form">
+  <div class="container">
+    <div class="row align-items-center bg-light discription-div">
+      <div class="col-lg-6 d-none d-md-block">
+        <h1 class="main-title">Платформа предиктивной аналитики состояния здоровья</h1>
+        <p class="lead text-dark mb-5" style="text-align: left;">
+          Мы предоставим быструю аналитику и эффективный план, основанный на статистике и исследованиях из надежных источников,
+          чтобы обеспечить сохранение вашего здоровья
+        </p>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="form-header d-flex align-items-center mb-4">
+          <div class="p-2 ms-auto tab-link active" data-form="loginForm">
+            <h1 class="m-0" style="cursor: pointer;">ВХОД</h1>
           </div>
-        {% endif %}
-    <section class="form">
-        <div class="container">
-            <div class="row align-items-center  bg-light discription-div ">
-                <div class="col-lg-6 d-none d-md-block">
-                    <h1 class="main-title">Платформа предиктивной аналитики состояния здоровья</h1>
-                    <p class="lead text-dark mb-5" style="text-align: left;"> Мы предоставим быструю аналитику и эффективный план,
-                            основанный на статистике и исследованиях из надежных источников,
-                            чтобы обеспечить сбережение вашего здоровья
-                    </p>
-                </div>
+          <div class="vr"></div>
+          <div class="p-2 tab-link" data-form="registerForm">
+            <h2 class="m-0" style="cursor: pointer;">РЕГИСТРАЦИЯ</h2>
+          </div>
+        </div>
 
-                 <div class="col-lg-6">
-                    <div class="form-header d-flex align-items-center mb-4">
-                        <div class="p-2 ms-auto tab-link active" data-form="loginForm">
-                            <h1 class="m-0" style="cursor: pointer; color: #377C70">ВХОД</h1>
-                        </div>
-                        <div class="vr"></div>
-                        <div class="p-2 tab-link" data-form="registerForm">
-                            <h2 class="m-0" style="cursor: pointer; color: #000000">РЕГИСТРАЦИЯ</h2>
-                        </div>
-                    </div>
+        <!-- Форма входа -->
+        <form id="loginForm" method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <input type="hidden" name="form_type" value="login">
 
-                    <form id="loginForm" method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        <label for="{{ login_form.email.id_for_label }}">E-mail</label>
-                        {{ login_form.email }}
+          {% if login_error %}
+            <div class="alert alert-danger">{{ login_error }}</div>
+          {% endif %}
 
-                        <label for="{{ login_form.password.id_for_label }}">Пароль</label>
-                        {{ login_form.password }}
+          <div class="mb-3">
+            {{ login_form.email.label_tag }}
+            {{ login_form.email }}
+            {% for err in login_form.email.errors %}
+              <div class="text-danger">{{ err }}</div>
+            {% endfor %}
+          </div>
 
-                        <div style="margin: 10px 0;">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">Запомнить меня</label>
-                        </div>
+          <div class="mb-3">
+            {{ login_form.password.label_tag }}
+            {{ login_form.password }}
+            {% for err in login_form.password.errors %}
+              <div class="text-danger">{{ err }}</div>
+            {% endfor %}
+          </div>
 
-                        <button class="cta-button" type="submit">ВОЙТИ</button>
-                     </form>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="remember" name="remember">
+            <label class="form-check-label" for="remember">Запомнить меня</label>
+          </div>
 
-                    <form id="registerForm" class="needs-validation d-none" method="post" action="{% url 'register' %}" novalidate>
-                        {% csrf_token %}
+          <button class="btn btn-primary w-100 cta-button" type="submit">ВОЙТИ</button>
+        </form>
 
-                        <div class="mb-3">
-                            <label for="Namereg" class="form-label">Имя</label>
-                            <input type="text" class="form-control" id="Namereg" name="first_name" required>
-                            {% if form.first_name.errors %}
-                                <div class="text-danger">{{ form.first_name.errors }}</div>
-                            {% endif %}
-                        </div>
+        <!-- Форма регистрации -->
+        <form id="registerForm" class="needs-validation d-none" method="post" action="{% url 'login' %}" novalidate>
+          {% csrf_token %}
+          <input type="hidden" name="form_type" value="register">
 
-                        <div class="mb-3">
-                            <label for="Sernamereg" class="form-label">Фамилия</label>
-                            <input type="text" class="form-control" id="Sernamereg" name="last_name" required>
-                            {% if form.last_name.errors %}
-                                <div class="text-danger">{{ form.last_name.errors }}</div>
-                            {% endif %}
-                        </div>
+          {% for field in register_form %}
+            <div class="mb-3">
+              {{ field.label_tag }}
+              {{ field }}
+              {% for err in field.errors %}
+                <div class="text-danger">{{ err }}</div>
+              {% endfor %}
+            </div>
+          {% endfor %}
 
-                        <div class="mb-3">
-                            <label for="emailreg" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" id="emailreg" name="email" placeholder="ivanivanov@mail.ru" required>
-                            {% if form.email.errors %}
-                                <div class="text-danger">{{ form.email.errors }}</div>
-                            {% endif %}
-                        </div>
+          <button type="submit" class="btn btn-success w-100 cta-button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+        </form>
 
-                        <div class="mb-3">
-                            <label for="passwordreg" class="form-label">Пароль</label>
-                            <input type="password" class="form-control" id="passwordreg" name="password1" required>
-                            {% if form.password1.errors %}
-                                <div class="text-danger">{{ form.password1.errors }}</div>
-                            {% endif %}
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="confirmpassword" class="form-label">Подтвердите пароль</label>
-                            <input type="password" class="form-control" id="confirmpassword" name="password2" required>
-                            <!-- Вывод ошибок для подтверждения пароля -->
-                            {% if form.password2.errors %}
-                                <div class="text-danger">{{ form.password2.errors }}</div>
-                            {% endif %}
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100 cta-button">ЗАРЕГИСТРИРОВАТЬСЯ</button>
-                    </form>
-
+        <p class="mt-3"><a href="#">Забыли пароль?</a></p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const tabs = document.querySelectorAll('.tab-link');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            tabs.forEach(t => {
-                t.classList.remove('active');
-                t.querySelector('h1, h2').style.color = '#000000';
-            });
-            this.classList.add('active');
-            this.querySelector('h1, h2').style.color = '#377C70';
-            document.querySelectorAll('form').forEach(form => {
-                form.classList.add('d-none');
-            });
-            const formId = this.dataset.form;
-            document.getElementById(formId).classList.remove('d-none');
-        });
+  const tabs = document.querySelectorAll('.tab-link');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      document.querySelectorAll('form').forEach(f => f.classList.add('d-none'));
+      document.getElementById(this.dataset.form).classList.remove('d-none');
     });
+  });
 });
 </script>
 
-                    <p><a href="#">Забыли пароль?</a></p>
-                </div>
-            </div>
-        </div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}

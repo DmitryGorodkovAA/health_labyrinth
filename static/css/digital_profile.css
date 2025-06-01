@@ -342,3 +342,14 @@ canvas {
     width: 100% !important;
     height: 100% !important;
 }
+
+
+.scrollable-list {
+  width: 300px;
+  height: 200px; /* Фиксированная высота */
+  overflow-y: auto; /* Включение вертикальной прокрутки */
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}

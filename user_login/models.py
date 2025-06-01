@@ -28,8 +28,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     age = models.IntegerField(default=20)
     weight = models.FloatField(default=65)
-    height = models.IntegerField(default=180)
-    gender = models.CharField(max_length=1, choices=[('M', 'Male'), ('F', 'Female')], default='M')
+    height = models.FloatField(default=180)
+    gender = models.CharField(
+        max_length=1,
+        choices=[('M', 'Мужской'), ('F', 'Женский')],
+        default='M'
+    )
+    activity_level = models.IntegerField(default=3)
+    sleep_hours = models.FloatField(default=8.0)
+    smoking = models.BooleanField(default=False)
+    alcohol = models.BooleanField(default=False)
+    stress_level = models.IntegerField(default=3)
 
     objects = UserManager()
 
@@ -43,6 +52,7 @@ class Forecast(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='forecast')
     name = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_deleted = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+{% block content %}
 
 <html lang="en">
 <head>
@@ -10,10 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/digital_profile.css' %}">
-
-
 </head>
-<body>
 
     <div class="container">
         <div class="message-box">
@@ -23,115 +20,56 @@
 
     <section class="container" id="fill_info">
         <div class="fill_info ">
-            <div class="row">
-                <div class="col">
-                    <div class="form-container">
-                        <div class="form-field">
-                            <label style="display: flex;">Возраст</label>
-                            <input type="number" id = "age" min="5" max="60" placeholder="Введите" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Рост</label>
-                            <input type="number" id="height" min="100" placeholder="Введите"
-                                style="margin-left: 60px;" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Вес</label>
-                            <input type="number" id="weight" min="10" placeholder="Введите"
-                                style="margin-left: 70px;" />
-                        </div>
-
-                        <div class="form-field">
-                            <label>Пол</label>
-                            <select id="gender" style="margin-left: 60px; border: none;">
-                                <option value="male">Мужской</option>
-                                <option value="female">Женский</option>
-                            </select>
-                        </div>
-
-                        <div class="form-field">
-                            <label>Образ<br>жизни</label>
-                            <select id="lifestyle" style="margin-left: 30px; border: none;">
-                                <option>Активный</option>
-                                <option>Сидячий</option>
-                            </select>
-                        </div>
-
-                        <div class="form-field">
-                            <label>Привычки</label>
-                            <div>
-                                <button id="toggleButton">Выбрать</button>
-
-                                <div id="checkboxContainer">
-                                    <p><input type="checkbox"> Переедание</p><br>
-                                    <p><input type="checkbox"> Курение</p><br>
-                                    <p><input type="checkbox"> Алкоголь</p><br>
-                                </div>
-
-                                <script>
-                                    const toggleButton = document.getElementById('toggleButton');
-                                    const checkboxContainer = document.getElementById('checkboxContainer');
-
-                                    toggleButton.addEventListener('click', () => {
-                                        // Переключаем видимость контейнера с чекбоксами
-                                        if (checkboxContainer.style.display === 'none' || checkboxContainer.style.display === '') {
-                                            checkboxContainer.style.display = 'block';
-                                            toggleButton.textContent = 'Подтвердить';
-                                        } else {
-                                            checkboxContainer.style.display = 'none';
-                                            toggleButton.textContent = 'Выбрать';
-                                        }
-                                    });
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="cta-button btn" onclick="updateCharts()">Обновить график</button>
-                    <script>
-                        function updateCharts() {
-                            const formData = {
-                                age: document.getElementById('age').value,
-                                height: document.getElementById('height').value,
-                                weight: document.getElementById('weight').value,
-                                gender: document.getElementById('gender').value,
-                                lifestyle: document.getElementById('lifestyle').value,
-                                habits: []
-                            };
-
-                            const habitCheckboxes = document.querySelectorAll('#checkboxContainer input[type="checkbox"]');
-                            const habitLabels = document.querySelectorAll('#checkboxContainer p');
-
-                            habitCheckboxes.forEach((checkbox, index) => {
-                                if (checkbox.checked) {
-                                    const habitText = habitLabels[index].textContent.replace(/\n/g, '').trim();
-                                    formData.habits.push(habitText);
-                                }
-                            });
-
-                            const xhr = new XMLHttpRequest();
-                            xhr.open('POST', 'урлсервера', true);
-                            xhr.setRequestHeader('Content-Type', 'application/json');
-                            xhr.send(JSON.stringify(formData));
-                        }
-                    </script>
-                </div>
-                <div class="col">
-                    <div class="chart-sections">
-                        {% for forecast in forecasts %}
-                        <div class="single-chart-container" style="max-height: 300px">
-                            <h3 class="text-center">{{ forecast.name }}</h3>
-                            <div class="chart-wrapper">
-                                <canvas id="chart-{{ forecast.id }}"></canvas>
-                            </div>
-                        </div>
-                        {% include "Chart.html" with forecast=forecast %}
-                        {% endfor %}
-                    </div>
-                </div>
+              <div class="row">
+    <div class="col-md-4">
+<form method="post" novalidate>
+  {% csrf_token %}
+  <div class="mb-3">
+    {{ form.age.label_tag }}{{ form.age }}
+  </div>
+  <div class="mb-3">
+    {{ form.sex.label_tag }}{{ form.sex }}
+  </div>
+  <div class="mb-3">
+    {{ form.height.label_tag }}{{ form.height }}
+  </div>
+  <div class="mb-3">
+    {{ form.weight.label_tag }}{{ form.weight }}
+  </div>
+  <div class="mb-3">
+    {{ form.activity_level.label_tag }}{{ form.activity_level }}
+  </div>
+  <div class="mb-3">
+    {{ form.sleep_hours.label_tag }}{{ form.sleep_hours }}
+  </div>
+  <div class="form-check mb-3">
+    {{ form.smoking }} {{ form.smoking.label_tag }}
+  </div>
+  <div class="form-check mb-3">
+    {{ form.alcohol }} {{ form.alcohol.label_tag }}
+  </div>
+  <div class="mb-3">
+    {{ form.stress_level.label_tag }}{{ form.stress_level }}
+  </div>
+  <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+    </div>
+    <div class="col-md-8">
+      <div class="chart-sections">
+        {% for forecast in forecasts %}
+          <div class="single-chart-container mb-5">
+            <h4 class="text-center">{{ forecast.name }}</h4>
+            <div class="chart-wrapper">
+              <canvas id="chart-{{ forecast.id }}"></canvas>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            {% include "Chart.html" with forecast=forecast %}
+          </div>
+        {% empty %}
+          <p>Пока нет прогнозов. Заполните форму слева и нажмите кнопку.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
         </div>
     </section>
 
@@ -159,9 +97,7 @@
         </section>
     </div>
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </html>
 {% endblock %}
+

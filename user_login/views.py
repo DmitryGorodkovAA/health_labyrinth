@@ -23,6 +23,7 @@ def login_page(request):
 
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
+
         if login_form.is_valid():
             email = login_form.cleaned_data['email']
             password = login_form.cleaned_data['password']
@@ -35,7 +36,42 @@ def login_page(request):
     else:
         login_form = LoginForm()
 
-    return render(request, 'user_login.html', context={'title': 'Login', 'login_form': login_form})
+    form = RegisterForm()
+    return render(request, 'user_login.html', context={'title': 'Login', 'login_form': login_form, 'form': form})
+
+def user_login(request):
+    register_form = RegisterForm()
+    login_form = LoginForm()
+    login_error = None
+
+    if request.method == 'POST':
+        if request.POST.get('form_type') == 'register':
+            register_form = RegisterForm(request.POST)
+            if register_form.is_valid():
+                user = register_form.save(commit=False)
+                user.username = user.email  # или другое поле для username
+                user.set_password(register_form.cleaned_data['password'])
+                user.save()
+                login(request, user)
+                return redirect('home')  # куда перенаправить после регистрации
+        elif request.POST.get('form_type') == 'login':
+            login_form = LoginForm(request.POST)
+            if login_form.is_valid():
+                email = login_form.cleaned_data['email']
+                password = login_form.cleaned_data['password']
+                user = authenticate(request, username=email, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    login_error = "Неверный email или пароль."
+
+    context = {
+        'register_form': register_form,
+        'login_form': login_form,
+        'login_error': login_error,
+    }
+    return render(request, 'user_login.html', context)
 
 def logout_view(request):
     logout(request)
