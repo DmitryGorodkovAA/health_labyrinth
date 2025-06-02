@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
 
 <html lang="en">
@@ -7,21 +8,229 @@
     <title>Лабиринт Здоровья</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+            crossorigin="anonymous">
+    <!-- ... ваши стили ... -->
+    <!-- Bootstrap JS (вместе с Popper) -->
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/digital_profile.css' %}">
+
+
+    <style>
+
+        .levels-filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            user-select: none;
+        }
+
+        .levels-filter .option {
+            padding: 0.5rem 1.25rem;
+            margin: 0 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #555;
+            background-color: #f0f0f0;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .levels-filter .option.selected {
+            background-color: #004A3D;
+            color: #fff;
+        }
+
+        /* --------------------------------------------
+           3) Стили списка советов
+           -------------------------------------------- */
+        .advice-section {
+            margin-top: 2rem;
+        }
+
+        .advice-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .advice-item {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            transition: box-shadow 0.2s ease;
+            background-color: #fff;
+        }
+
+        .advice-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .advice-item .advice-header {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+        }
+
+        .advice-item .advice-header input[type="checkbox"] {
+            margin-right: 0.75rem;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        .advice-item .advice-content {
+            padding: 0 1rem 1rem 1rem;
+            display: none;
+            font-size: 0.95rem;
+            color: #333;
+        }
+
+        .advice-item .advice-content p {
+            margin: 0 0 0.5rem 0;
+        }
+
+        /* Открытый сообщением класс, когда автор раскрывает описание совета */
+        .advice-item.open .advice-content {
+            display: block;
+        }
+
+        /* --------------------------------------------
+           4) Скрываем советы неактуального уровня
+           -------------------------------------------- */
+        .advice-item[data-level="1"] { /* базовый */
+            /* изначально отображены, но их скрытие/отображение контролирует JS */
+        }
+
+        .advice-item[data-level="2"] { /* средний */
+        }
+
+        .advice-item[data-level="3"] { /* продвинутый */
+        }
+
+        /* Все, у кого data-level != выбранного, мы будем скрывать через JS */
+        .advice-item.hidden-level {
+            display: none !important;
+        }
+
+        /* 1. Стили для самой карточки и её тени */
+        .chart-sections .card {
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            overflow: hidden; /* чтобы скругления работали корректно */
+            transition: box-shadow 0.2s ease;
+        }
+
+        .chart-sections .card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        /* 2. Сброс и оформление header-а */
+        .chart-sections .card-header {
+            background-color: #f8f9fa;
+            padding: 0; /* чтобы кнопка заняла всю ширину */
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .chart-sections .card-header h5 {
+            margin: 0; /* сбрасываем лишние отступы у <h5> */
+        }
+
+        /* 3. Оформление кнопки в заголовке */
+        .chart-sections .card-header .btn-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #333;
+            text-decoration: none;
+            background-color: transparent;
+            border: none; /* убираем «рамку» у кнопки */
+        }
+
+        .chart-sections .card-header .btn-link:hover {
+            background-color: #e9ecef;
+            text-decoration: none;
+        }
+
+        .chart-sections .card-header .btn-link:focus,
+        .chart-sections .card-header .btn-link:active {
+            box-shadow: none;
+            outline: none;
+        }
+
+        /* 4. Стрелка справа у кнопки */
+        .chart-sections .card-header .btn-link::after {
+            content: "▶";
+            display: inline-block;
+            transition: transform 0.2s ease;
+            font-size: 1.25rem;
+            color: #555;
+        }
+
+        /* Когда collapse раскрыт, у кнопки нет класса .collapsed → поворачиваем стрелку */
+        .chart-sections .card-header .btn-link:not(.collapsed)::after {
+            transform: rotate(90deg);
+        }
+
+        /* 5. Обёртка для графика: задаём только высоту, без псевдоэлементов */
+        .chart-sections .card-body .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px; /* зарезервированная высота для canvas */
+            margin-bottom: 1rem;
+            background-color: #fafafa; /* светлый фон, пока график не отрисован */
+        }
+
+        /* ВАЖНО: убираем всё, что было в ::before, чтобы не перекрывать canvas */
+
+        /* 6. Чтобы collapse не «сжимался» по ширине */
+        .chart-sections .collapse {
+            width: 100%;
+        }
+
+        .chart-sections .collapse.show {
+            transition: height 0.3s ease;
+        }
+
+        /* 7. Отступы внутри тела карточки */
+        .chart-sections .card-body {
+            padding: 1rem;
+            background-color: #ffffff;
+        }
+
+        .collapse {
+            width: 100%;
+        }
+
+        /* Если карточка ограничена контейнером, collapse будет тянуться по его ширине */
+        .card {
+            width: 100%;
+        }
+    </style>
 </head>
 
-    <div class="container">
-        <div class="message-box">
-            <p>Введите данные о вашем здоровье и получите прогноз будущего состояния вашего организма</p>
-        </div>
+<div class="container">
+    <div class="message-box">
+      <p>Введите данные о вашем здоровье и получите прогноз будущего состояния вашего организма</p>
     </div>
+  </div>
 
-    <section class="container" id="fill_info">
-        <div class="fill_info ">
-              <div class="row">
-    <div class="col-md-4">
+  <section class="container" id="fill_info">
+    <div class="fill_info">
+      <div class="row">
+        <div class="col-md-4">
 <form method="post" novalidate>
   {% csrf_token %}
   <div class="mb-3">
@@ -53,51 +262,247 @@
   </div>
   <button type="submit" class="btn btn-primary">Отправить</button>
 </form>
-    </div>
-    <div class="col-md-8">
-      <div class="chart-sections">
-        {% for forecast in forecasts %}
-          <div class="single-chart-container mb-5">
-            <h4 class="text-center">{{ forecast.name }}</h4>
-            <div class="chart-wrapper">
-              <canvas id="chart-{{ forecast.id }}"></canvas>
-            </div>
-            {% include "Chart.html" with forecast=forecast %}
+        </div>
+        <div class="col-md-8">
+          <div class="chart-sections">
+            {% for forecast in forecasts %}
+              <div class="card mb-2" data-forecast-name="{{ forecast.name }}">
+                <div class="card-header" id="heading-{{ forecast.id }}">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link text-decoration-none collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapse-{{ forecast.id }}"
+                            aria-expanded="false"
+                            aria-controls="collapse-{{ forecast.id }}">
+                      {{ forecast.name }}
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapse-{{ forecast.id }}" class="collapse" aria-labelledby="heading-{{ forecast.id }}">
+                  <div class="card-body">
+                    <div class="chart-wrapper">
+                      <canvas id="chart-{{ forecast.id }}"></canvas>
+                    </div>
+                    {% include "Chart.html" with forecast=forecast %}
+                  </div>
+                </div>
+              </div>
+            {% empty %}
+              <p>Пока нет прогнозов. Заполните форму слева и нажмите кнопку.</p>
+            {% endfor %}
           </div>
-        {% empty %}
-          <p>Пока нет прогнозов. Заполните форму слева и нажмите кнопку.</p>
-        {% endfor %}
+        </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <div class="container">
+    <section class="wish">
+      <p>Хотите получить индивидуальный план поддержания вашего здоровья?</p>
+      <i class="description">Поделитесь с нами желаемым результатом вашего состояния организма, выбрав категорию и перетащив ползунок ниже</i>
+
+      <div class="advice-section">
+        <div class="levels-filter">
+          <div class="option selected" data-level="1">Базовый</div>
+          <div class="option" data-level="2">Средний</div>
+          <div class="option" data-level="3">Продвинутый</div>
         </div>
+
+<ul class="advice-list" id="advice-list">
+  {% for advice in advice_list %}
+    <li class="advice-item"
+        data-level="{{ advice.level }}"
+        data-effects="effects_{{ forloop.counter0 }}">
+      <div class="advice-header">
+        <input type="checkbox" class="advice-checkbox" id="advice-{{ forloop.counter0 }}">
+        <label for="advice-{{ forloop.counter0 }}" style="cursor: pointer; font-weight: 500;">
+          {{ advice.title }}
+        </label>
+        <button class="btn btn-sm btn-outline-secondary ms-auto advice-toggle-desc">
+          <span class="toggle-icon">+</span>
+        </button>
+      </div>
+      <div class="advice-content">
+        <p>{{ advice.description }}</p>
+        <p><em>Эффекты:</em>
+          {% for key, val in advice.effects.items %}
+            <span class="badge bg-light text-dark me-1">
+              {{ key }}: −{{ val }}%
+            </span>
+          {% endfor %}
+        </p>
+      </div>
+
+      {# Вот здесь мы ЯВНО вставляем JSON, не пользуясь json_script #}
+      <script id="effects_{{ forloop.counter0 }}" type="application/json">
+        {{ advice.effects_json|safe }}
+      </script>
+    </li>
+  {% endfor %}
+</ul>      </div>
+
+      <div class="slider-container">
+        <div class="slider">
+          <div class="thumb"></div>
+        </div>
+      </div>
+
+      <button class="cta-button btn" style="margin-left: 40%; margin-bottom: 30px;">
+        Получить план
+      </button>
     </section>
+  </div>
 
-    <div class="container">
-        <section class="wish">
-            <p>Хотите получить индивидуальный план поддержания вашего здоровья?</p>
-            <i class="description">Поделитесь с нами желаемым результатом вашего состояния организма, выбрав категорию и перетащив ползунок ниже</i>
+<script>
+  // Шаг 1. Собираем данные из контекста Django в JS-объект
+  const forecastPoints = {};
+  {% for forecast in forecasts %}
+    forecastPoints["{{ forecast.name }}"] = {{ forecast.points|safe }};
+  {% endfor %}
+</script>
+  <!-- Chart.js (если не подключён в base.html) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            <div class="category">
-                <div class="options">
-                    <div class="option">Средний</div>
-                    <div class="option selected">Выше среднего</div>
-                    <div class="option">Идеальный</div>
-                </div>
-            </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const charts = {};           // { <forecastName>: ChartInstance, … }
+  const originalDatasets = {}; // { <forecastName>: [orig1, orig2, …], … }
 
-            <div class="slider-container">
-                <div class="slider">
-                    <div class="thumb"></div>
-                </div>
-            </div>
+  // Инициализируем графики так же, как раньше (две линии: original + corrected).
+  document.querySelectorAll('canvas[id^="chart-"]').forEach(canvasEl => {
+    const existingChart = Chart.getChart(canvasEl);
+    if (existingChart) existingChart.destroy();
 
-            <button class="cta-button btn" style="margin-left: 40%; margin-bottom: 30px;">Получить план</button>
+    const ctx = canvasEl.getContext('2d');
+    const parentCard = canvasEl.closest('.card');
+    const forecastName = parentCard.getAttribute('data-forecast-name');
 
-        </section>
-    </div>
+    const pts = forecastPoints[forecastName] || [];
+    const labels = pts.map(p => p.age);
+    const origData = pts.map(p => p.percent);
+    originalDatasets[forecastName] = origData.slice();
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Исходная вероятность (%)',
+            data: origData.slice(),
+            borderColor: '#004A3D',
+            backgroundColor: 'rgba(0, 74, 61, 0.1)',
+            fill: false,
+            tension: 0.1,
+            pointRadius: 3,
+            pointBackgroundColor: '#004A3D'
+          },
+          {
+            label: 'Скорректированная вероятность (%)',
+            data: origData.map(() => NaN),
+            borderColor: '#D63447',
+            backgroundColor: 'rgba(214, 52, 71, 0.1)',
+            fill: false,
+            tension: 0.1,
+            pointRadius: 3,
+            pointBackgroundColor: '#D63447'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: '%' } },
+          x: { title: { display: true, text: 'Возраст' } }
+        }
+      }
+    });
+
+    const collapseEl = parentCard.querySelector('.collapse');
+    if (collapseEl) {
+      collapseEl.addEventListener('shown.bs.collapse', () => {
+        myChart.resize();
+      });
+    }
+
+    charts[forecastName] = myChart;
+  });
+
+  // Фильтрация советов по уровню (без изменений)
+  const levelOptions = document.querySelectorAll('.levels-filter .option');
+  let currentLevel = 1;
+  function filterAdviceByLevel(level) {
+    document.querySelectorAll('.advice-item').forEach(li => {
+      const lvl = Number(li.getAttribute('data-level'));
+      if (lvl === level) li.classList.remove('hidden-level');
+      else li.classList.add('hidden-level');
+    });
+  }
+  levelOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+      levelOptions.forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      currentLevel = Number(opt.getAttribute('data-level'));
+      filterAdviceByLevel(currentLevel);
+    });
+  });
+  filterAdviceByLevel(currentLevel);
+
+  // Обновлённый обработчик для чекбоксов: учитываем все выбранные советы
+  document.querySelectorAll('.advice-checkbox').forEach(chbox => {
+    chbox.addEventListener('change', () => {
+      // 1) Соберём все активные советы и их эффекты
+      const activeEffects = {}; // { <forecastName>: [e1, e2, …], … }
+      document.querySelectorAll('.advice-checkbox:checked').forEach(checkedBox => {
+        const li = checkedBox.closest('.advice-item');
+        const scriptId = li.getAttribute('data-effects');
+        const effects = JSON.parse(document.getElementById(scriptId).textContent);
+        // В effects: { 'hypertension': 10, 'stroke': 5, … }
+        Object.entries(effects).forEach(([forecastName, pct]) => {
+          if (!activeEffects[forecastName]) activeEffects[forecastName] = [];
+          activeEffects[forecastName].push(pct);
+        });
+      });
+
+      // 2) Для каждого графика пересчитаем «скорректированную» линию
+      Object.keys(charts).forEach(forecastName => {
+        const chartInstance = charts[forecastName];
+        const origData = originalDatasets[forecastName];
+
+        let corrected = origData.slice(); // начнём с оригинала
+        if (activeEffects[forecastName]) {
+          // Применяем все эффекты последовательно (умножаем коэффициенты)
+          // Например, если есть эффекты [10, 5], итоговый множитель:
+          //  (1−0.10) * (1−0.05)
+          const factors = activeEffects[forecastName].map(pct => (1 - pct / 100));
+          const combinedFactor = factors.reduce((acc, f) => acc * f, 1);
+          // Применяем к каждому значению
+          corrected = origData.map(v => +(v * combinedFactor).toFixed(2));
+        } else {
+          // Если нет ни одного эффекта на этот прогноз, оставляем массив NaN, чтобы линия скрылась
+          corrected = origData.map(() => NaN);
+        }
+
+        // 3) Обновляем вторую серию (datasets[1]) и перерисовываем
+        chartInstance.data.datasets[1].data = corrected;
+        chartInstance.update();
+      });
+    });
+  });
+
+  // Раскрытие/скрытие описания совета (без изменений)
+  document.querySelectorAll('.advice-toggle-desc').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const li = btn.closest('.advice-item');
+      li.classList.toggle('open');
+      const icon = btn.querySelector('.toggle-icon');
+      icon.textContent = li.classList.contains('open') ? '−' : '+';
+    });
+  });
+});
+</script>
 </html>
 {% endblock %}
 

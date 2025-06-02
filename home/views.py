@@ -512,6 +512,7 @@ def forecast(request):
 
     user = request.user
 
+    # Задаём initial для формы из полей пользователя
     initial = {
         'age':            user.age,
         'sex':            0 if user.gender == 'M' else 1,
@@ -529,6 +530,7 @@ def forecast(request):
     if request.method == 'POST' and form.is_valid():
         cd = form.cleaned_data
 
+        # Обновляем пользователя
         user.age            = cd['age']
         user.gender         = 'M' if int(cd['sex']) == 0 else 'F'
         user.height         = cd['height']
@@ -541,19 +543,21 @@ def forecast(request):
         user.save()
 
         user_data = {
-            'age': cd['age'],
-            'sex': int(cd['sex']),
-            'height': cd['height'],
-            'weight': cd['weight'],
+            'age':            cd['age'],
+            'sex':            int(cd['sex']),
+            'height':         cd['height'],
+            'weight':         cd['weight'],
             'activity_level': int(cd['activity_level']),
-            'sleep_hours': cd['sleep_hours'],
-            'smoking': int(cd['smoking']),
-            'alcohol': int(cd['alcohol']),
-            'stress_level': int(cd['stress_level']),
+            'sleep_hours':    cd['sleep_hours'],
+            'smoking':        cd['smoking'],
+            'alcohol':        cd['alcohol'],
+            'stress_level':   int(cd['stress_level']),
         }
 
+        # Отмечаем старые прогнозы как удалённые
         Forecast.objects.filter(user=user, is_deleted=False).update(is_deleted=True)
 
+        # Генерируем новые прогнозы
         predictions = predict_risks(user_data)
         for disease, probs in predictions.items():
             fc = Forecast.objects.create(user=user, name=disease)
@@ -567,27 +571,35 @@ def forecast(request):
 
         return redirect('forecasts')
 
-    forecasts = user.forecast.filter(is_deleted=False)
+    # Получаем все «не удалённые» прогнозы пользователя
+    forecasts_qs = user.forecast.filter(is_deleted=False)
     forecasts_data = []
-    for f_obj in forecasts:
-        points = f_obj.points.order_by('age')
+    for f_obj in forecasts_qs:
+        points_qs = f_obj.points.order_by('age')
+        points_list = [
+            {'age': pt.age, 'percent': pt.percent}
+            for pt in points_qs
+        ]
         forecasts_data.append({
             'id':     f_obj.id,
             'name':   f_obj.name,
-            'points': json.dumps([{'age': pt.age, 'percent': pt.percent} for pt in points])
+            # Сериализуем список точек сразу в JSON-строку
+            'points': json.dumps(points_list, ensure_ascii=False)
         })
 
-    print(forecasts_data)
+    # Получаем список советов (каждый совет — словарь с ключами title, description, effects, level)
     advice_list = get_personal_health_advice(initial)
-    print(advice_list)
 
+    # Для каждого совета сразу делаем JSON-строку из advice['effects']
+    for advice in advice_list:
+        advice['effects_json'] = json.dumps(advice['effects'], ensure_ascii=False)
 
     return render(request, 'digital_profile.html', {
-        'title': 'Прогнозы',
-        'user': user,
-        'forecasts': forecasts_data,
-        'form': form,
-        'advice_list':advice_list
+        'title':        'Прогнозы',
+        'user':         user,
+        'forecasts':    forecasts_data,
+        'form':         form,
+        'advice_list':  advice_list,
     })
 
 
