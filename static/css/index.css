@@ -14,7 +14,9 @@ body {
     color: #436475;
 
 }
-
+p{
+    color: #015849;
+}
 a {
     text-decoration: none;
     font-weight: bold;
@@ -29,10 +31,10 @@ a{
     font-size: 20px;
 }
 .main-title {
-    font-size: 3rem;
+    font-size: 64px;
     color: #015849;
     font-weight: 700;
-    margin-bottom: 2rem;
+    margin-bottom: 10rem;
 }
 .hero-section {
     padding: 40px 0;
@@ -50,7 +52,7 @@ a{
     color: white;
 }
 .step-number {
-    font-size: 4rem;
+    font-size: 70px;
     color: #377C70;
     font-weight: 700;
 }
